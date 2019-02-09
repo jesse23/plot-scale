@@ -2,7 +2,7 @@
 
 How can we translate:
 
-```json
+```javascript
 {
     "name": "George Washington",
     "birthday": "February 22, 1732",
