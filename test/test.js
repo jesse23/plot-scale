@@ -7,10 +7,23 @@ import * as App from '../src/app.js';
 import * as assert from 'assert';
 
 // Suite
-describe('Basic Mapping Requirement', function () {
+describe('Basic Mapping Requirement', function() {
   
-    // Test
-    it('Example Test', function () {
-        assert.equal(App.getEventName(), '_test');
+    it('First Mapping Case', function() {
+ 
+        // Source
+        let source = [ [ 'a', 'b' ], [ 'c', 'd' ] ];
+
+        // Target
+        let target = [ {
+            first:  'a',
+            second: 'b'
+        },
+        {
+            first:  'c',
+            second: 'd'
+        } ];
+
+        assert.deepEqual(App.xfer(source), target);
     });
 });
