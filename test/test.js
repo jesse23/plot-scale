@@ -24,6 +24,32 @@ describe('Basic Mapping Requirement', function() {
             second: 'd'
         } ];
 
-        assert.deepEqual(App.xfer(source), target);
+        assert.deepEqual( App.xfer( source, App.processor1 ), target);
     });
+
+    it('Second Mapping Case', function() {
+ 
+        // Source
+        let source = [ {
+            name: 'George Washington',
+            birthday: 'February 22, 1732',
+            address: '3200 Mount Vernon Memorial Highway, Mount Vernon, Virginia, United States'
+        } ];
+
+        // Target
+        let target = [ {
+            first_name: 'George',
+            last_name: 'Washington',
+            birthday: '1732-02-22',
+            address: {
+                street_address: '3200 Mount Vernon Memorial Highway',
+                city: 'Mount Vernon',
+                state: 'Virginia',
+                country: 'United States'
+            }
+        } ];
+
+        assert.deepEqual( App.xfer( source, App.processor2 ), target );
+    });
+
 });
