@@ -9,7 +9,7 @@ import * as assert from 'assert';
 // Suite
 describe('Basic Mapping Requirement', function() {
   
-    it('First Mapping Case', function() {
+    it('Case1', function() {
  
         // Source
         let source = [ [ 'a', 'b' ], [ 'c', 'd' ] ];
@@ -24,10 +24,10 @@ describe('Basic Mapping Requirement', function() {
             second: 'd'
         } ];
 
-        assert.deepEqual( App.xfer( source, App.processor1 ), target);
+        assert.deepEqual( App.xfer0( source, App.processor1 ), target);
     });
 
-    it('Second Mapping Case', function() {
+    it('Case2', function() {
  
         // Source
         let source = [ {
@@ -49,7 +49,33 @@ describe('Basic Mapping Requirement', function() {
             }
         } ];
 
-        assert.deepEqual( App.xfer( source, App.processor2 ), target );
+        assert.deepEqual( App.xfer0( source, App.processor2 ), target );
     });
+
+    it('Case1 by Rule', function() {
+ 
+        // Source
+        let source = [ [ 'a', 'b' ], [ 'c', 'd' ] ];
+
+        // Target
+        let target = [ {
+            first:  'a',
+            second: 'b'
+        },
+        {
+            first:  'c',
+            second: 'd'
+        } ];
+
+        // Rule
+        let rules = [
+            'tar:obj',
+            'tar.first:obj.0',
+            'tar.second:obj.1'
+        ];
+
+        assert.deepEqual( App.xfer( source, rules ), target );
+    });
+
 
 });
