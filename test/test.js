@@ -50,9 +50,9 @@ describe('Basic Mapping Requirement', function() {
             birthday: '1732-02-22',
             address: {
                 street_address: '3200 Mount Vernon Memorial Highway',
-                /*city: 'Mount Vernon',
+                city: 'Mount Vernon',
                 state: 'Virginia',
-                country: 'United States'*/
+                country: 'United States'
             }
         } ];
 
@@ -62,7 +62,10 @@ describe('Basic Mapping Requirement', function() {
             "tar.first_name:Object.name:$value.split(' ')[0]",
             "tar.last_name:Object.name:$value.split(' ')[1]",
             "tar.birthday:Object.birthday:(new Date($value)).toISOString().split('T')[0]",
-            "tar.address.street_address:Object.address:$value.split(', ')[0]"
+            "tar.address.street_address:Object.address:$value.split(', ')[0]",
+            "tar.address.city:Object.address:$value.split(', ')[1]",
+            "tar.address.state:Object.address:$value.split(', ')[2]",
+            "tar.address.country:Object.address:$value.split(', ')[3]",
         ];
 
         assert.deepEqual( App.xfer( source, rules ), target );

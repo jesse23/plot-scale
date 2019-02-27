@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright 2019 Wenjia Peng
+ * Available under MIT License
+ */
 import * as _ from 'lodash';
 
 // Private variables
