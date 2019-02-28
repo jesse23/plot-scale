@@ -4,6 +4,7 @@
  * Available under MIT License
  */
 import * as _ from 'lodash';
+import * as Parser from './parser.js';
 
 // Private variables
 // let _eventName = '_test';
@@ -28,7 +29,7 @@ import * as _ from 'lodash';
 // xfer version
 // ----------------------------------------------------------------------
 // Return true for now
-function isClass( /*obj, className*/ ) {
+function isType( /*obj, className*/ ) {
     return true;
 }
 
@@ -37,32 +38,28 @@ export let xfer = function ( srcObjs, rules ) {
 
     _.forEach( rules, function( rule ) {
         // Parse rule
-        let [ tarClause, srcClause, funcClause ] = rule.split(':');
-        let [ srcClass, srcAttr ] = srcClause.split('.');
-
-        // Target Rule
-        let [ tarClass, tarAttr ] = tarClause.split(/\.(.+)/);
+        let ruleObj = Parser.parse( rule );
 
         // Class mapping
-        if ( !srcAttr && !tarAttr ) {
+        if ( !ruleObj.src.attr && !ruleObj.tar.attr ) {
             _.forEach( srcObjs, function(srcObj) {
-                if( isClass( srcObj, srcClass ) ) {
+                if( isType( srcObj, ruleObj.src.type ) ) {
                     let tar = {};
                     tar._src   = srcObj;
-                    tar._class = tarClass;
+                    tar._type = ruleObj.tar.type;
                     tG.push(tar);
                 }
             } );
         }
 
         // Attribute mapping
-        if ( srcAttr && tarAttr ) {
+        if ( ruleObj.src.attr && ruleObj.tar.attr ) {
             _.forEach( tG, function(tarObj) {
-                if ( funcClause ) {
-                    var func = new Function('$value', 'return ' + funcClause );
-                    _.set( tarObj, tarAttr, func(tarObj._src[srcAttr]) );
+                if ( ruleObj.func ) {
+                    var func = new Function('$value', 'return ' + ruleObj.func );
+                    _.set( tarObj, ruleObj.tar.attr, func(tarObj._src[ruleObj.src.attr]) );
                 } else {
-                    _.set( tarObj, tarAttr, tarObj._src[srcAttr] );
+                    _.set( tarObj, ruleObj.tar.attr, tarObj._src[ruleObj.src.attr] );
                 }
             } );
         }
@@ -71,7 +68,7 @@ export let xfer = function ( srcObjs, rules ) {
     // Clean up internal attribute
     _.forEach( tG, function(tarObj) {
         delete tarObj._src;
-        delete tarObj._class;
+        delete tarObj._type;
     } );
 
     return tG;
