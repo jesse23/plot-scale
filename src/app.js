@@ -33,7 +33,7 @@ function isType( /*obj, className*/ ) {
     return true;
 }
 
-export let xfer = function ( srcObjs, rules ) {
+export let xfer = function ( sG, rules ) {
     var tG = [];
 
     _.forEach( rules, function( rule ) {
@@ -42,7 +42,7 @@ export let xfer = function ( srcObjs, rules ) {
 
         // Class mapping
         if ( !ruleObj.src.attr && !ruleObj.tar.attr ) {
-            _.forEach( srcObjs, function(srcObj) {
+            _.forEach( sG, function(srcObj) {
                 if( isType( srcObj, ruleObj.src.type ) ) {
                     let tar = {};
                     tar._src   = srcObj;
