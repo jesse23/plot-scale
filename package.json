@@ -13,11 +13,12 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "mocha": "^5.2.0",
-    "@babel/core": "^7.0.0-beta.40",
     "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.2.2",
+    "@babel/register": "^7.0.0",
     "babel-loader": "^8.0.0-beta.0",
     "babel-plugin-lodash": "^3.3.2",
-    "@babel/preset-env": "latest",
+    "@babel/preset-env": "7.3.4",
     "babel-plugin-react-transform": "^3.0.0"
   },
   "babel": {
@@ -38,10 +39,5 @@
   "bugs": {
     "url": "https://github.com/jesse23/plot-scale/issues"
   },
-  "homepage": "https://github.com/jesse23/plot-scale#readme",
-  "dependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-es2015": "^7.0.0-beta.53",
-    "@babel/register": "^7.0.0"
-  }
+  "homepage": "https://github.com/jesse23/plot-scale#readme"
 }
