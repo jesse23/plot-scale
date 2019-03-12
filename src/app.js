@@ -4,7 +4,7 @@
  * Available under MIT License
  */
 import * as _ from 'lodash';
-import * as Parser from './parser.js';
+import * as Compiler from './Compiler.js';
 
 // Private variables
 // let _eventName = '_test';
@@ -28,48 +28,8 @@ import * as Parser from './parser.js';
 // ----------------------------------------------------------------------
 // xfer version
 // ----------------------------------------------------------------------
-// Return true for now
-function isType( /*obj, className*/ ) {
-    return true;
-}
-
 export let xfer = function ( sG, rules ) {
-    var tG = [];
-
-    _.forEach( rules, function( rule ) {
-        // Parse rule
-        let ruleObj = Parser.parse( rule );
-
-        // Class mapping
-        if ( !ruleObj.src.attr && !ruleObj.tar.attr ) {
-            _.forEach( sG, function(srcObj) {
-                if( isType( srcObj, ruleObj.src.type ) ) {
-                    let tar = {};
-                    tar._src   = srcObj;
-                    tar._type = ruleObj.tar.type;
-                    tG.push(tar);
-                }
-            } );
-        }
-
-        // Attribute mapping
-        if ( ruleObj.src.attr && ruleObj.tar.attr ) {
-            _.forEach( tG, function(tarObj) {
-                if ( ruleObj.func ) {
-                    var func = new Function('$value', 'return ' + ruleObj.func );
-                    _.set( tarObj, ruleObj.tar.attr, func(tarObj._src[ruleObj.src.attr]) );
-                } else {
-                    _.set( tarObj, ruleObj.tar.attr, tarObj._src[ruleObj.src.attr] );
-                }
-            } );
-        }
-    } );
-
-    // Clean up internal attribute
-    _.forEach( tG, function(tarObj) {
-        delete tarObj._src;
-        delete tarObj._type;
-    } );
-
-    return tG;
+    return _.reduce( Compiler.compile( rules ), function( g, proc ) {
+        return proc.run(g);
+    }, sG);
 };
