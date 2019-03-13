@@ -6,7 +6,7 @@
 
 import * as _ from 'lodash';
 
-export class AttrProcessor {
+export class AttrMapper {
     constructor() {
         let _ruleObjs = [];
 
@@ -18,7 +18,7 @@ export class AttrProcessor {
             _ruleObjs.push(ruleObj);
         };
 
-        this.run = function( g ) {
+        this.exec = function( g ) {
             return _.forEach( g, function(tarObj) {
                 _.forEach( _ruleObjs, function( ruleObj ) {
                     if ( ruleObj.func ) {

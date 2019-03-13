@@ -16,7 +16,7 @@ export class JsonFormatter {
             // do nothing
         };
 
-        this.run = function( g ) {
+        this.exec = function( g ) {
             // Clean up internal attribute
             _.forEach( g, function(tarObj) {
                 delete tarObj._src;

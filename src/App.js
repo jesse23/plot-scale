@@ -28,8 +28,8 @@ import * as Compiler from './Compiler.js';
 // ----------------------------------------------------------------------
 // xfer version
 // ----------------------------------------------------------------------
-export let map = function ( sG, rules ) {
+export let run = function ( sG, rules ) {
     return _.reduce( Compiler.compile( rules ), function( g, proc ) {
-        return proc.run(g);
+        return proc.exec(g);
     }, sG);
 };

@@ -6,7 +6,7 @@
 
 import * as _ from 'lodash';
 
-export class NodeProcessor {
+export class NodeMapper {
     constructor() {
         let _ruleObjs = [];
 
@@ -22,7 +22,7 @@ export class NodeProcessor {
             _ruleObjs.push(ruleObj);
         };
 
-        this.run = function( g ) {
+        this.exec = function( g ) {
             var tG = [];
             _.forEach( _ruleObjs, function( ruleObj ) {
                 _.forEach( g, function(srcObj) {
