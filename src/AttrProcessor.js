@@ -6,7 +6,7 @@
 
 import * as _ from 'lodash';
 
-export class AttrMapper {
+export class AttrProcessor {
     constructor() {
         let _ruleObjs = [];
 

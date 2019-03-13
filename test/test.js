@@ -3,7 +3,7 @@
  */
 
 // Module
-import * as App from '../src/App.js';
+import * as Mapper from '../src/Mapper.js';
 import * as assert from 'assert';
 
 // Suite
@@ -30,7 +30,7 @@ describe('Basic Mapping Requirement', function() {
             second: 'd'
         } ];
 
-        assert.deepEqual( App.xfer( source, rules ), target );
+        assert.deepEqual( Mapper.map( source, rules ), target );
     });
 
     it('Case2 by Rule', function() {
@@ -66,7 +66,7 @@ describe('Basic Mapping Requirement', function() {
             }
         } ];
 
-        assert.deepEqual( App.xfer( source, rules ), target );
+        assert.deepEqual( Mapper.map( source, rules ), target );
     });
 
     it('Case3 by Rule', function() {
@@ -90,6 +90,6 @@ describe('Basic Mapping Requirement', function() {
             job: 'President'
         } ];
 
-        assert.deepEqual( App.xfer( source, rules ), target );
+        assert.deepEqual( Mapper.map( source, rules ), target );
     });
 });

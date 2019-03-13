@@ -28,7 +28,7 @@ import * as Compiler from './Compiler.js';
 // ----------------------------------------------------------------------
 // xfer version
 // ----------------------------------------------------------------------
-export let xfer = function ( sG, rules ) {
+export let map = function ( sG, rules ) {
     return _.reduce( Compiler.compile( rules ), function( g, proc ) {
         return proc.run(g);
     }, sG);

@@ -6,7 +6,7 @@
 
 import * as _ from 'lodash';
 
-export class NodeMapper {
+export class NodeProcessor {
     constructor() {
         let _ruleObjs = [];
 
