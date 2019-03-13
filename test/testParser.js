@@ -10,11 +10,10 @@ import * as assert from 'assert';
 describe('Test Parser', function() {
 
     it('Parse type mapping rule', function() {
- 
-        // Source
+        // Clause
         let clause = "B:A";
 
-        // Target
+        // Result
         let ruleObj = {
             tar: {
                 type: 'B',
@@ -28,11 +27,10 @@ describe('Test Parser', function() {
     });
 
     it('Parse attribute mapping rule', function() {
- 
-        // Source
+        // Clause
         let clause = "tar.second:Object.1";
 
-        // Target
+        // Result
         let ruleObj = {
             tar: {
                 type: 'tar',
@@ -48,11 +46,10 @@ describe('Test Parser', function() {
     });
 
     it('Parse attribute update rule', function() {
- 
-        // Source
+        // Clause
         let clause = "tar.job: :'President'";
 
-        // Target
+        // Result
         let ruleObj = {
             tar: {
                 type: 'tar',
@@ -63,4 +60,41 @@ describe('Test Parser', function() {
 
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
+
+    it('Parse attribute update rule( no space )', function() {
+        // Clause
+        let clause = "tar.job::'President'";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'tar',
+                attr: 'job'
+            },
+            func: "'President'"
+        };
+
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });
+
+
+    it('Parse rule has ":" in string', function() {
+        // Clause
+        let clause = "B.b:A.a:$value + ':output'";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b'
+            },
+            src: {
+                type: 'A',
+                attr: 'a'
+            },
+            func: "$value + ':output'"
+        };
+
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });   
 });

@@ -36,21 +36,21 @@ export let parse = function( ruleClause ) {
     ];
 
     // Parse clause
-    let [ tarClause, srcClause, funcClause, condClause ] = ruleClause.split(':');
+    let [ tarClause, srcClause, funcClause, condClause ] = ruleClause.match(/(('[^']*')|[^:])*(:|$)/g);
 
     // Parse srcClause
-    let [ srcType, srcAttr ] = srcClause.split('.');
+    let [ srcType, srcAttr ] = srcClause.replace(/:$/,'').split('.');
 
     // Parse tarClause
-    let [ tarType, tarAttr ] = tarClause.split(/\.(.+)/);
+    let [ tarType, tarAttr ] = tarClause.replace(/:$/,'').split(/\.(.+)/);
 
     return _.reduce([
         tarType,
         tarAttr,
         srcType.trim(),
         srcAttr,
-        funcClause,
-        condClause
+        funcClause ? funcClause.replace(/:$/,'') : funcClause,
+        condClause ? condClause.replace(/:$/,'') : condClause
     ], function( obj, clause, key ) {
         return clause ? _.set( obj, ruleObjDef[key], clause) : obj;
     }, {} );
