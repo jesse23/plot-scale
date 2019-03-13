@@ -6,16 +6,16 @@
 
 import * as _ from 'lodash';
 import * as Parser from './Parser.js';
-import {PlotCreator} from './PlotCreator.js';
-import {LeafCreator} from './LeafCreator.js';
+import {NodeMapper} from './NodeMapper.js';
+import {AttrMapper} from './AttrMapper.js';
 import {JsonFormatter} from './JsonFormatter.js';
 
 export let compile = function( ruleClauses ) {
 
     let procs = [];
 
-    procs.push(new PlotCreator());
-    procs.push(new LeafCreator());
+    procs.push(new NodeMapper());
+    procs.push(new AttrMapper());
     procs.push(new JsonFormatter());
 
     // Parse rule

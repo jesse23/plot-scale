@@ -6,7 +6,7 @@
 
 import * as _ from 'lodash';
 
-export class PlotCreator {
+export class NodeMapper {
     constructor() {
         let _ruleObjs = [];
 
@@ -15,7 +15,7 @@ export class PlotCreator {
         };
 
         this.when = function( ruleObj ) {
-            return !ruleObj.src.attr && !ruleObj.tar.attr; 
+            return ruleObj.src && !ruleObj.src.attr && ruleObj.tar && !ruleObj.tar.attr; 
         };
 
         this.add = function( ruleObj ) {

@@ -4,7 +4,7 @@
  * Available under MIT License
  */
 
-// import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 // ----------------------------------------------------------------------
 // Example: 
@@ -25,25 +25,35 @@
 // ----------------------------------------------------------------------
 
 export let parse = function( ruleClause ) {
-    // Parse rule
+    // ruleObj definition
+    var ruleObjDef = [
+        'tar.type',
+        'tar.attr',
+        'src.type',
+        'src.attr',
+        'func',
+        'cond'
+    ];
+
+    // Parse clause
     let [ tarClause, srcClause, funcClause, condClause ] = ruleClause.split(':');
-    let [ srcClass, srcAttr ] = srcClause.split('.');
 
-    // Target Rule
-    let [ tarClass, tarAttr ] = tarClause.split(/\.(.+)/);
+    // Parse srcClause
+    let [ srcType, srcAttr ] = srcClause.split('.');
 
-    return {
-        tar: {
-            type: tarClass,
-            attr: tarAttr
-        },
-        src: {
-            type: srcClass,
-            attr: srcAttr
-        },
-        func: funcClause,
-        cond: condClause
-    };
+    // Parse tarClause
+    let [ tarType, tarAttr ] = tarClause.split(/\.(.+)/);
+
+    return _.reduce([
+        tarType,
+        tarAttr,
+        srcType.trim(),
+        srcAttr,
+        funcClause,
+        condClause
+    ], function( obj, clause, key ) {
+        return clause ? _.set( obj, ruleObjDef[key], clause) : obj;
+    }, {} );
 };
 
 

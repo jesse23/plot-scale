@@ -10,6 +10,12 @@ import * as assert from 'assert';
 describe('Basic Mapping Requirement', function() {
   
     it('Case1 by Rule', function() {
+        // Rule
+        let rules = [
+            'tar:Object',
+            'tar.first:Object.0',
+            'tar.second:Object.1'
+        ];
  
         // Source
         let source = [ [ 'a', 'b' ], [ 'c', 'd' ] ];
@@ -24,18 +30,22 @@ describe('Basic Mapping Requirement', function() {
             second: 'd'
         } ];
 
-        // Rule
-        let rules = [
-            'tar:Object',
-            'tar.first:Object.0',
-            'tar.second:Object.1'
-        ];
-
         assert.deepEqual( App.xfer( source, rules ), target );
     });
 
     it('Case2 by Rule', function() {
- 
+        // Rule
+        let rules = [
+            "tar:Object",
+            "tar.first_name:Object.name:$value.split(' ')[0]",
+            "tar.last_name:Object.name:$value.split(' ')[1]",
+            "tar.birthday:Object.birthday:(new Date($value)).toISOString().split('T')[0]",
+            "tar.address.street_address:Object.address:$value.split(', ')[0]",
+            "tar.address.city:Object.address:$value.split(', ')[1]",
+            "tar.address.state:Object.address:$value.split(', ')[2]",
+            "tar.address.country:Object.address:$value.split(', ')[3]",
+        ];
+
         // Source
         let source = [ {
             name: 'George Washington',
@@ -56,17 +66,29 @@ describe('Basic Mapping Requirement', function() {
             }
         } ];
 
+        assert.deepEqual( App.xfer( source, rules ), target );
+    });
+
+    it('Case3 by Rule', function() {
         // Rule
         let rules = [
             "tar:Object",
-            "tar.first_name:Object.name:$value.split(' ')[0]",
-            "tar.last_name:Object.name:$value.split(' ')[1]",
-            "tar.birthday:Object.birthday:(new Date($value)).toISOString().split('T')[0]",
-            "tar.address.street_address:Object.address:$value.split(', ')[0]",
-            "tar.address.city:Object.address:$value.split(', ')[1]",
-            "tar.address.state:Object.address:$value.split(', ')[2]",
-            "tar.address.country:Object.address:$value.split(', ')[3]",
+            "tar.job: :'President'"
         ];
+ 
+        // Source
+        let source = [ {
+            name: 'George Washington'
+        }, {
+            name: 'Donald Trump'
+        } ];
+
+        // Target
+        let target = [ {
+            job: 'President'
+        },{
+            job: 'President'
+        } ];
 
         assert.deepEqual( App.xfer( source, rules ), target );
     });
