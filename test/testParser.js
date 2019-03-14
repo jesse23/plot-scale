@@ -77,7 +77,6 @@ describe('Test Parser', function() {
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
 
-
     it('Parse rule has ":" in string', function() {
         // Clause
         let clause = "B.b:A.a:$value + ':output'";
@@ -97,4 +96,25 @@ describe('Test Parser', function() {
 
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });   
+
+    it('Parse rule has "\'" in string', function() {
+        // Clause
+        let clause = "B.b:A.a:$value + 'out\\':put'";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b'
+            },
+            src: {
+                type: 'A',
+                attr: 'a'
+            },
+            func: "$value + 'out\\':put'"
+        };
+
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });   
+
 });

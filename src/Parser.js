@@ -23,6 +23,13 @@ import * as _ from 'lodash';
 //     func: $value.split(' ')[1]
 // }
 // ----------------------------------------------------------------------
+let parseClause = function( ruleClause ) {
+    return ruleClause.match(/(('(\\'|[^'])*')|[^:])*(:|$)/g).map(str => str.replace(/:$/,'').trim());
+};
+
+let parseTrv = function( trvClause ) {
+    return trvClause.split(/\.(.+)/).map( str => str.trim() );
+};
 
 export let parse = function( ruleClause ) {
     // ruleObj definition
@@ -36,21 +43,21 @@ export let parse = function( ruleClause ) {
     ];
 
     // Parse clause
-    let [ tarClause, srcClause, funcClause, condClause ] = ruleClause.match(/(('[^']*')|[^:])*(:|$)/g);
-
-    // Parse srcClause
-    let [ srcType, srcAttr ] = srcClause.replace(/:$/,'').split('.');
+    let [ tarClause, srcClause, funcClause, condClause ] = parseClause(ruleClause);
 
     // Parse tarClause
-    let [ tarType, tarAttr ] = tarClause.replace(/:$/,'').split(/\.(.+)/);
+    let [ tarType, tarAttr ] = parseTrv( tarClause );
+
+    // Parse srcClause
+    let [ srcType, srcAttr ] = parseTrv( srcClause );
 
     return _.reduce([
         tarType,
         tarAttr,
-        srcType.trim(),
+        srcType,
         srcAttr,
-        funcClause ? funcClause.replace(/:$/,'') : funcClause,
-        condClause ? condClause.replace(/:$/,'') : condClause
+        funcClause,
+        condClause
     ], function( obj, clause, key ) {
         return clause ? _.set( obj, ruleObjDef[key], clause) : obj;
     }, {} );
