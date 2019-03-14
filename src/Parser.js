@@ -24,7 +24,7 @@ import * as _ from 'lodash';
 // }
 // ----------------------------------------------------------------------
 let parseClause = function( ruleClause ) {
-    return ruleClause.match(/(('(\\'|[^'])*')|[^:])*(:|$)/g).map(str => str.replace(/:$/,'').trim());
+    return ruleClause.match(/\s*(({[^}]*})|((('(\\'|[^'])*')|[^:])*))\s*(:|$)/g).map(str => str.replace(/:$/,'').trim());
 };
 
 let parseTrv = function( trvClause ) {

@@ -117,4 +117,44 @@ describe('Test Parser', function() {
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });   
 
+    it('Parse rule has ":" in function', function() {
+        // Clause
+        let clause = "B.b:A.a:{ $value > 0 ? 'yes' : 'no' }";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b'
+            },
+            src: {
+                type: 'A',
+                attr: 'a'
+            },
+            func: "{ $value > 0 ? 'yes' : 'no' }"
+        };
+
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });   
+
+    it('Parse rule has space', function() {
+        // Clause
+        let clause = "  B.b  :  A.a  :  { $value > 0 ? 'yes' : 'no' }  ";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b'
+            },
+            src: {
+                type: 'A',
+                attr: 'a'
+            },
+            func: "{ $value > 0 ? 'yes' : 'no' }"
+        };
+
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });   
+
 });
