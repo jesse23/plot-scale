@@ -22,7 +22,6 @@ describe('Test Parser', function() {
                 type: 'A',
             }
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
 
@@ -41,7 +40,6 @@ describe('Test Parser', function() {
                 attr: '1'
             }
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
 
@@ -57,7 +55,6 @@ describe('Test Parser', function() {
             },
             func: "'President'"
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
 
@@ -73,7 +70,6 @@ describe('Test Parser', function() {
             },
             func: "'President'"
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
 
@@ -93,9 +89,8 @@ describe('Test Parser', function() {
             },
             func: "$value + ':output'"
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
-    });   
+    });
 
     it('Parse rule has "\'" in string', function() {
         // Clause
@@ -113,11 +108,10 @@ describe('Test Parser', function() {
             },
             func: "$value + 'out\\':put'"
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
-    });   
+    });
 
-    it('Parse rule has ":" in function', function() {
+    it('Parse rule has ":" in function clause', function() {
         // Clause
         let clause = "B.b:A.a:{ $value > 0 ? 'yes' : 'no' }";
 
@@ -133,11 +127,10 @@ describe('Test Parser', function() {
             },
             func: "$value > 0 ? 'yes' : 'no'"
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
-    });   
+    });
 
-    it('Parse rule has space', function() {
+    it('Parse rule has space in function clause', function() {
         // Clause
         let clause = "  B.b  :  A.a  :  { $value > 0 ? 'yes' : 'no' }  ";
 
@@ -153,8 +146,65 @@ describe('Test Parser', function() {
             },
             func: "$value > 0 ? 'yes' : 'no'"
         };
-
         assert.deepEqual( Parser.parse( clause ), ruleObj );
-    });   
+    });
+
+    it('Parse rule has condition clause', function() {
+        // Clause
+        let clause = "B.b:A.a: 'yes' : $value > 0";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b'
+            },
+            src: {
+                type: 'A',
+                attr: 'a'
+            },
+            func: "'yes'",
+            cond: "$value > 0",
+        };
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });
+
+    it('Parse rule has ":" in condition clause', function() {
+        // Clause
+        let clause = "B.b:A.a::{ $value > 0 ? 'yes' : 'no' }";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b'
+            },
+            src: {
+                type: 'A',
+                attr: 'a'
+            },
+            cond: "$value > 0 ? 'yes' : 'no'"
+        };
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });
+
+    it('Parse rule has space in condition clause', function() {
+        // Clause
+        let clause = "  B.b  :  A.a  :  :  { $value > 0 ? 'yes' : 'no' }  ";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b'
+            },
+            src: {
+                type: 'A',
+                attr: 'a'
+            },
+            cond: "$value > 0 ? 'yes' : 'no'"
+        };
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });
 
 });

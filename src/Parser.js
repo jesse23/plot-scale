@@ -32,7 +32,7 @@ let parseTrv = function( trvClause ) {
 };
 
 let parseFunc = function( funcClause ) {
-    return funcClause.replace(/^\s*{(.*)}\s*$/,'$1').trim();
+    return funcClause ? funcClause.replace(/^\s*{(.*)}\s*$/,'$1').trim() : funcClause;
 };
 
 export let parse = function( ruleClause ) {
@@ -58,13 +58,16 @@ export let parse = function( ruleClause ) {
     // Parse funcClause
     let funcExpr = parseFunc( funcClause );
 
+    // Parse condClause
+    let condExpr = parseFunc( condClause );
+
     return _.reduce([
         tarType,
         tarAttr,
         srcType,
         srcAttr,
         funcExpr,
-        condClause
+        condExpr
     ], function( obj, clause, key ) {
         return clause ? _.set( obj, ruleObjDef[key], clause) : obj;
     }, {} );

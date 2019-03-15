@@ -8,7 +8,7 @@ import * as assert from 'assert';
 
 // Suite
 describe('Test Attribute Mapping', function() {
-    it('Verify {cond?a:b} works correctly in function', function() {
+    it('Verify { cond ? a : b } works correctly in function', function() {
         // Rule
         let rules = [
             "tar:Object",
