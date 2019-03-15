@@ -21,9 +21,17 @@ export class AttrMapper {
         this.exec = function( g ) {
             return _.forEach( g, function(tarObj) {
                 _.forEach( _ruleObjs, function( ruleObj ) {
+                    if ( ruleObj.cond ) {
+                        let cond = new Function('$value', 'return ' + ruleObj.cond );
+                        let arg = ruleObj.src ? ruleObj.src.attr : undefined;
+                        if ( !cond(tarObj._src[arg]) ) {
+                            return true;
+                        }
+                    }
+
                     if ( ruleObj.func ) {
-                        var func = new Function('$value', 'return ' + ruleObj.func );
-                        var arg = ruleObj.src ? ruleObj.src.attr : undefined;
+                        let func = new Function('$value', 'return ' + ruleObj.func );
+                        let arg = ruleObj.src ? ruleObj.src.attr : undefined;
                         _.set( tarObj, ruleObj.tar.attr, func(tarObj._src[arg]) );
                     } else {
                         _.set( tarObj, ruleObj.tar.attr, tarObj._src[ruleObj.src.attr] );
