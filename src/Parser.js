@@ -24,11 +24,15 @@ import * as _ from 'lodash';
 // }
 // ----------------------------------------------------------------------
 let parseClause = function( ruleClause ) {
-    return ruleClause.match(/\s*(({[^}]*})|((('(\\'|[^'])*')|[^:])*))\s*(:|$)/g).map(str => str.replace(/:$/,'').trim());
+    return ruleClause.match(/\s*((('(\\'|[^'])*')|({[^}]*})|[^:])*)\s*(:|$)/g).map(str => str.replace(/:$/,'').trim());
 };
 
 let parseTrv = function( trvClause ) {
     return trvClause.split(/\.(.+)/).map( str => str.trim() );
+};
+
+let parseFunc = function( funcClause ) {
+    return funcClause.replace(/^\s*{(.*)}\s*$/,'$1').trim();
 };
 
 export let parse = function( ruleClause ) {
@@ -51,12 +55,15 @@ export let parse = function( ruleClause ) {
     // Parse srcClause
     let [ srcType, srcAttr ] = parseTrv( srcClause );
 
+    // Parse funcClause
+    let funcExpr = parseFunc( funcClause );
+
     return _.reduce([
         tarType,
         tarAttr,
         srcType,
         srcAttr,
-        funcClause,
+        funcExpr,
         condClause
     ], function( obj, clause, key ) {
         return clause ? _.set( obj, ruleObjDef[key], clause) : obj;

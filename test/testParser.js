@@ -131,7 +131,7 @@ describe('Test Parser', function() {
                 type: 'A',
                 attr: 'a'
             },
-            func: "{ $value > 0 ? 'yes' : 'no' }"
+            func: "$value > 0 ? 'yes' : 'no'"
         };
 
         assert.deepEqual( Parser.parse( clause ), ruleObj );
@@ -151,7 +151,7 @@ describe('Test Parser', function() {
                 type: 'A',
                 attr: 'a'
             },
-            func: "{ $value > 0 ? 'yes' : 'no' }"
+            func: "$value > 0 ? 'yes' : 'no'"
         };
 
         assert.deepEqual( Parser.parse( clause ), ruleObj );
