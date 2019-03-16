@@ -10,8 +10,12 @@ export class NodeMapper {
     constructor() {
         let _ruleObjs = [];
 
-        let isType = function( /*obj, className*/ ) {
-            return true;
+        let isType = function( obj, typeName ) {
+            if( typeName === 'Object' ) {
+                return true;
+            }
+            return obj._plot_type === typeName;
+            //return true;
         };
 
         this.when = function( ruleObj ) {
@@ -28,8 +32,8 @@ export class NodeMapper {
                 _.forEach( g, function(srcObj) {
                     if( isType( srcObj, ruleObj.src.type ) ) {
                         let tar = {};
-                        tar._src = srcObj;
-                        tar._type = ruleObj.tar.type;
+                        tar._plot_source = srcObj;
+                        tar._plot_type = ruleObj.tar.type;
                         tG.push(tar);
                     }
                 } );

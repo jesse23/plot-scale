@@ -6,20 +6,16 @@
 
 import * as _ from 'lodash';
 
-export class AttrMapper {
+export class GraphProcessor {
     constructor() {
         let _ruleObjs = [];
 
-        let isType = function( obj, typeName ) {
-            if( typeName === 'Object' ) {
-                return true;
-            }
-            return obj._plot_type === typeName;
-            //return true;
+        let isType = function( /*obj, typeName*/ ) {
+            return true;
         };
 
         this.when = function( ruleObj ) {
-            return ruleObj.tar && ruleObj.tar.attr; 
+            return ruleObj.src && !ruleObj.tar; 
         };
 
         this.add = function( ruleObj ) {
@@ -27,13 +23,13 @@ export class AttrMapper {
         };
 
         this.exec = function( g ) {
-            return _.forEach( g, function(tarObj) {
+            return _.forEach( g, function(obj) {
                 _.forEach( _ruleObjs, function( ruleObj ) {
-                    if( isType( tarObj, ruleObj.tar.type ) ) {
+                    if( isType( obj, ruleObj.src.type ) ) {
                         if ( ruleObj.cond ) {
-                            let cond = new Function('$value', '$object', 'return ' + ruleObj.cond );
+                            let cond = new Function('$value', 'return ' + ruleObj.cond );
                             let arg = ruleObj.src ? ruleObj.src.attr : undefined;
-                            if ( !cond(tarObj._plot_source[arg], tarObj._plot_source) ) {
+                            if ( !cond(obj[arg]) ) {
                                 return true;
                             }
                         }
@@ -41,9 +37,9 @@ export class AttrMapper {
                         if ( ruleObj.func ) {
                             let func = new Function('$value', '$object', 'return ' + ruleObj.func );
                             let arg = ruleObj.src ? ruleObj.src.attr : undefined;
-                            _.set( tarObj, ruleObj.tar.attr, func(tarObj._plot_source[arg], tarObj._plot_source ) );
+                            _.set( obj, ruleObj.src.attr, func(obj[arg], obj) );
                         } else {
-                            _.set( tarObj, ruleObj.tar.attr, tarObj._plot_source[ruleObj.src.attr] );
+                            // _.set( obj, ruleObj.src.attr, obj[ruleObj.src.attr] );
                         }
                     }
                 } );
