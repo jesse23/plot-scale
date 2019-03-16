@@ -130,6 +130,22 @@ describe('Test Parser', function() {
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
 
+    it('Parse json structure in function rule', function() {
+        // Clause
+        let clause = ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })[0]";
+
+        // Result
+        let ruleObj = {
+            src: {
+                type: 'View',
+                attr: 'source'
+            },
+            func: "_.filter($graph, { '_plot_type': 'Source', 'id': $value })[0]"
+        };
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+ 
+    });
+
     it('Parse rule has space in function clause', function() {
         // Clause
         let clause = "  B.b  :  A.a  :  { $value > 0 ? 'yes' : 'no' }  ";

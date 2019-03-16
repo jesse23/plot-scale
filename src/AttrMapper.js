@@ -27,39 +27,41 @@ export class AttrMapper {
         };
 
         this.exec = function( g ) {
-            return _.forEach( g, function(tarObj) {
-                _.forEach( _ruleObjs, function( ruleObj ) {
+            _.forEach( _ruleObjs, function( ruleObj ) {
+                _.forEach( g, function(tarObj) {
                     if( isType( tarObj, ruleObj.tar.type ) ) {
                         if ( ruleObj.cond ) {
-                            let cond = new Function('$value', '$object', 'return ' + ruleObj.cond );
+                            let cond = new Function('_', '$value', '$object', '$graph', 'return ' + ruleObj.cond );
                             if ( ruleObj.src ) {
                                 let arg = ruleObj.src ? ruleObj.src.attr : undefined;
-                                if ( !cond(tarObj._plot_source[arg], tarObj._plot_source) ) {
+                                if ( !cond(_, tarObj._plot_source[arg], tarObj._plot_source, g) ) {
                                     return true;
                                 }
                             } else {
                                 let arg = ruleObj.tar ? ruleObj.tar.attr : undefined;
-                                if ( !cond(tarObj[arg], tarObj) ) {
+                                if ( !cond(_, tarObj[arg], tarObj, g) ) {
                                     return true;
                                 }
                             }
                         }
 
                         if ( ruleObj.func ) {
-                            let func = new Function('$value', '$object', 'return ' + ruleObj.func );
+                            let func = new Function('_', '$value', '$object', '$graph', 'return ' + ruleObj.func );
                             if ( ruleObj.src ) {
                                 let arg = ruleObj.src ? ruleObj.src.attr : undefined;
-                                _.set( tarObj, ruleObj.tar.attr, func(tarObj._plot_source[arg], tarObj._plot_source ) );
+                                _.set( tarObj, ruleObj.tar.attr, 
+                                    func(_, _.get(tarObj._plot_source, arg ), tarObj._plot_source, g ) );
                             } else {
                                 let arg = ruleObj.tar ? ruleObj.tar.attr : undefined;
-                                _.set( tarObj, ruleObj.tar.attr, func(tarObj[arg], tarObj ) );
+                                _.set( tarObj, ruleObj.tar.attr, func(_, _.get(tarObj,arg), tarObj, g ) );
                             }
                         } else {
-                            _.set( tarObj, ruleObj.tar.attr, tarObj._plot_source[ruleObj.src.attr] );
+                            _.set( tarObj, ruleObj.tar.attr, _.get(tarObj._plot_source, ruleObj.src.attr) );
                         }
                     }
                 } );
             } );
+            return g;
         };
     }
 }

@@ -149,6 +149,66 @@ describe('Test as Example', function() {
         assert.deepEqual( App.run( source, rules ), target );
     });
 
+    it( 'Test: Merge objects', function() {
+        // Rule
+        let rules = [
+            // pre-processing
+            ":Object._plot_type:$object.type",
+            ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })[0]",
+
+            // Mapping
+            "Part:View",
+            "Object.type::$object._plot_type",
+            "Part.width:View.width",
+            "Part.length:View.source.length",
+        ];
+
+        // Source
+        let source = [
+            {
+                type: "View",
+                width: 35,
+                source: "0003",
+                from: "0002",
+                id: "0001"
+            },
+            {
+                type: "View",
+                width: 45,
+                source: "0004",
+                id: "0002"
+            },
+            {
+                type: "Source",
+                length: "30",
+                displayValue: "shape1",
+                id: "0003"
+            },
+            {
+                type: "Source",
+                length: "40",
+                displayValue: "shape2",
+                id: "0004"
+            }
+        ];
+
+        // Target
+        let target = [
+            {
+                type: "Part",
+                length: "30",
+                width: 35,
+            },
+            {
+                type: "Part",
+                length: "40",
+                width: 45,
+            }
+        ];
+
+        assert.deepEqual( App.run( source, rules ), target );
+    });
+
     xit('Test: Map object reference', function() {
         // Rule
         let rules = [
