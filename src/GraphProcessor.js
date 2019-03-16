@@ -41,7 +41,6 @@ export class GraphProcessor {
                             let func = new Function('_', '$value', '$object', '$graph', 'return ' + ruleObj.func );
                             let arg = ruleObj.src ? ruleObj.src.attr : undefined;
                             _.set( obj, ruleObj.src.attr, func(_, obj[arg], obj, g) );
-                            console.log( 'Jesse:' + JSON.stringify(obj));
                         } else {
                             // _.set( obj, ruleObj.src.attr, obj[ruleObj.src.attr] );
                         }

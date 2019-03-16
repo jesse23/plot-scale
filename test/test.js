@@ -154,13 +154,13 @@ describe('Test as Example', function() {
         let rules = [
             // pre-processing
             ":Object._plot_type:$object.type",
-            ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })[0]",
+            ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })",
 
             // Mapping
             "Part:View",
             "Object.type::$object._plot_type",
             "Part.width:View.width",
-            "Part.length:View.source.length",
+            "Part.length:View.source[0].length",
         ];
 
         // Source
