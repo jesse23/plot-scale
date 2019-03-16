@@ -32,16 +32,28 @@ export class AttrMapper {
                     if( isType( tarObj, ruleObj.tar.type ) ) {
                         if ( ruleObj.cond ) {
                             let cond = new Function('$value', '$object', 'return ' + ruleObj.cond );
-                            let arg = ruleObj.src ? ruleObj.src.attr : undefined;
-                            if ( !cond(tarObj._plot_source[arg], tarObj._plot_source) ) {
-                                return true;
+                            if ( ruleObj.src ) {
+                                let arg = ruleObj.src ? ruleObj.src.attr : undefined;
+                                if ( !cond(tarObj._plot_source[arg], tarObj._plot_source) ) {
+                                    return true;
+                                }
+                            } else {
+                                let arg = ruleObj.tar ? ruleObj.tar.attr : undefined;
+                                if ( !cond(tarObj[arg], tarObj) ) {
+                                    return true;
+                                }
                             }
                         }
 
                         if ( ruleObj.func ) {
                             let func = new Function('$value', '$object', 'return ' + ruleObj.func );
-                            let arg = ruleObj.src ? ruleObj.src.attr : undefined;
-                            _.set( tarObj, ruleObj.tar.attr, func(tarObj._plot_source[arg], tarObj._plot_source ) );
+                            if ( ruleObj.src ) {
+                                let arg = ruleObj.src ? ruleObj.src.attr : undefined;
+                                _.set( tarObj, ruleObj.tar.attr, func(tarObj._plot_source[arg], tarObj._plot_source ) );
+                            } else {
+                                let arg = ruleObj.tar ? ruleObj.tar.attr : undefined;
+                                _.set( tarObj, ruleObj.tar.attr, func(tarObj[arg], tarObj ) );
+                            }
                         } else {
                             _.set( tarObj, ruleObj.tar.attr, tarObj._plot_source[ruleObj.src.attr] );
                         }
