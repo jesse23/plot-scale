@@ -209,12 +209,27 @@ describe('Test as Example', function() {
         assert.deepEqual( App.run( source, rules ), target );
     });
 
-    xit('Test: Map object reference', function() {
+    it('Test: Map object reference', function() {
         // Rule
         let rules = [
+            // pre-processing
+            ":Object._plot_type:$object.type",
+            ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })",
+
             "Part:View",
+            "Part.name:View.source[0].displayValue:'N'.concat($value)",
+            "Part.coreRef:View.source:_.map($value, '_plot_target')",
+            // TODO: Need to enhance later
+            "Part.coreRef[0].width:View.width",
+
             "Core:Source",
-            "Part.name:View.source->Source.displayValue:'N'.concat($value)",
+            "Core.length:Source.length:parseInt($value)",
+
+            "Object.uid:Object.id:$value.replace(/^00/,'M')",
+
+            // Post processing
+            "Object.type::$object._plot_type",
+            "Part.coreRef::_.map($value, 'uid')[0]",
         ];
  
         // Source
@@ -251,27 +266,27 @@ describe('Test as Example', function() {
             {
                 type: "Part",
                 name: "Nshape1",
-                coreRef: "N03",
-                uid: "N01"
+                coreRef: "M03",
+                uid: "M01"
             },
             {
                 type: "Part",
                 name: "Nshape2",
-                nextGen: "N01",
-                coreRef: "N04",
-                uid: "N02"
+                // nextGen: "M01",
+                coreRef: "M04",
+                uid: "M02"
             },
             {
                 type: "Core",
                 width: 35,
                 length: 30,
-                uid: "N03"
+                uid: "M03"
             },
             {
                 type: "Core",
                 width: 45,
                 length: 40,
-                uid: "N04"
+                uid: "M04"
             }
         ];
 

@@ -22,11 +22,14 @@ export class GraphProcessor {
             _.forEach( _ruleObjs, function( ruleObj ) {
                 _.forEach( g, function(obj) {
                     if( Utils.isType( obj, ruleObj.src.type ) ) {
-                        if ( ruleObj.cond && !Utils.evalExpr( obj[ruleObj.src.attr], obj, g, ruleObj.cond ) ) {
+                        let objClause = ruleObj.src;
+                        let value = _.get(obj, objClause.attr);
+
+                        if ( ruleObj.cond && !Utils.evalExpr( value, obj, g, ruleObj.cond ) ) {
                             return true;
                         }
 
-                        _.set( obj, ruleObj.src.attr, Utils.evalExpr( obj[ruleObj.src.attr], obj, g, ruleObj.func ) );
+                        _.set( obj, ruleObj.src.attr, Utils.evalExpr( value, obj, g, ruleObj.func ) );
                     }
                 } );
             } );
