@@ -6,6 +6,7 @@
 import * as _ from 'lodash';
 import * as Compiler from './Compiler.js';
 import * as FuncExecutor from './FuncExecutor';
+import { Const } from './Const.js';
 
 // Private variables
 // let _eventName = '_test';
@@ -34,6 +35,11 @@ export let run = function ( sG, rules, funcRules ) {
     if ( funcRules ) {
         FuncExecutor.evalDef( funcRules );
     }
+
+    // process input with _plot_type
+    _.forEach( sG, function(obj){
+        obj[Const.KEY_TYPE] = Const.TYPE_ROOT;
+    });
 
     return _.reduce( Compiler.compile( rules ), function( g, proc ) {
         return proc.exec(g);

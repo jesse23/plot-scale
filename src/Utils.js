@@ -5,18 +5,19 @@
  */
 
 import * as _ from 'lodash';
+import { Const } from './Const.js';
 
 export let isType = function( obj, typeName ) {
-    if( typeName === 'Object' ) {
+    if( typeName === Const.TYPE_ROOT ) {
         return true;
     }
-    return obj._plot_type === typeName;
+    return obj[Const.KEY_TYPE] === typeName;
 };
 
 export let set = function( obj, path, value ) {
     // Only support single path for now
-    _.set( obj, path, value );
-    if ( value && value._plot_type && !path.includes('.') ) {
-        _.set( value, '_plot_refby.' + path, obj );
+    if ( value && value[Const.KEY_TYPE] && !path.includes('.') ) {
+        _.set( value, Const.KEY_REFBY + '.' + path, obj );
     }
+    return _.set( obj, path, value );
 };

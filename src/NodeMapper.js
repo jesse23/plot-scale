@@ -6,6 +6,7 @@
 
 import * as _ from 'lodash';
 import * as Utils from './Utils';
+import { Const } from './Const.js';
 
 export class NodeMapper {
     constructor() {
@@ -25,9 +26,8 @@ export class NodeMapper {
                 _.forEach( g, function(srcObj) {
                     if( Utils.isType( srcObj, ruleObj.src.type ) ) {
                         let tar = {};
-                        tar._plot_type = ruleObj.tar.type;
-                        Utils.set( tar, '_plot_source', srcObj );
-                        tG.push(tar);
+                        tar[Const.KEY_TYPE] = ruleObj.tar.type;
+                        tG.push(Utils.set( tar, Const.KEY_SOURCE, srcObj ));
                     }
                 } );
             } );

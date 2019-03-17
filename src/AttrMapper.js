@@ -7,6 +7,7 @@
 import * as _ from 'lodash';
 import * as Utils from './Utils';
 import * as FuncExecutor from './FuncExecutor';
+import { Const } from './Const.js';
 
 export class AttrMapper {
     constructor() {
@@ -25,7 +26,7 @@ export class AttrMapper {
                 _.forEach( g, function(tarObj) {
                     if( Utils.isType( tarObj, ruleObj.tar.type ) ) {
                         let objClause = ruleObj.src ? ruleObj.src : ruleObj.tar;
-                        let obj = ruleObj.src ? tarObj._plot_source : tarObj;
+                        let obj = ruleObj.src ? tarObj[Const.KEY_SOURCE] : tarObj;
                         let value = _.get(obj, objClause.attr);
 
                         if ( ruleObj.cond && !FuncExecutor.evalExpr( value, obj, g, ruleObj.cond ) ) {

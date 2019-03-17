@@ -5,6 +5,7 @@
  */
 
 import * as _ from 'lodash';
+import { Const } from './Const.js';
 
 export class JsonFormatter {
     constructor() {
@@ -19,8 +20,9 @@ export class JsonFormatter {
         this.exec = function( g ) {
             // Clean up internal attribute
             _.forEach( g, function(tarObj) {
-                delete tarObj._plot_source;
-                delete tarObj._plot_type;
+                delete tarObj[Const.KEY_SOURCE];
+                delete tarObj[Const.KEY_TYPE];
+                delete tarObj[Const.KEY_REFBY];
             } );
 
             return g;
