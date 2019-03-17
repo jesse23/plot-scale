@@ -6,20 +6,16 @@
 
 import * as _ from 'lodash';
 
+let _scope = {};
 
 export let evalExpr = function( value, object, graph, expr ) {
-    let func = new Function('_', '$value', '$object', '$graph', 'return ' + expr );
-    return func( _, value, object, graph);
+    let func = new Function('_', '$value', '$object', '$graph', '$p', 'return ' + expr );
+    return func( _, value, object, graph, _scope );
 };
 
 export let evalDef = function( funcRules ) {
-    // TODO: Need to be enhanced
-    if ( global ) {
-        global.$p = {};
-    } else{
-        window.$p = {};
-    }
+    _scope = {};
 
-    let func = new Function( funcRules.join('') );
-    return func();
+    let func = new Function( '$p', funcRules.join('') );
+    return func( _scope );
 };

@@ -33,9 +33,9 @@ export class AttrMapper {
                         }
 
                         if ( ruleObj.func ) {
-                            _.set( tarObj, ruleObj.tar.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
+                            Utils.set( tarObj, ruleObj.tar.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
                         } else {
-                            _.set( tarObj, ruleObj.tar.attr, value );
+                            Utils.set( tarObj, ruleObj.tar.attr, value );
                         }
                     }
                 } );

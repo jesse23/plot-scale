@@ -27,8 +27,6 @@ export class NodeMapper {
                         let tar = {};
                         tar._plot_type = ruleObj.tar.type;
                         Utils.set( tar, '_plot_source', srcObj );
-                        //tar._plot_source = srcObj;
-                        //_.set(srcObj, '_plot_refby._plot_target', tar);
                         tG.push(tar);
                     }
                 } );

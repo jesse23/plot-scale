@@ -30,7 +30,7 @@ export class GraphProcessor {
                             return true;
                         }
 
-                        _.set( obj, ruleObj.src.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
+                        Utils.set( obj, ruleObj.src.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
                     }
                 } );
             } );

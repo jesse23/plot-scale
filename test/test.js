@@ -296,14 +296,13 @@ describe('Test as Example', function() {
     it('Test: Custom function in mapping', function() {
         // Function rule
         let funcRules = [
-            "var _accumlator = function() {",
+            "$p.$accu = function() {",
             "    var id = 0;",
             "    return function() {",
             "        id++;",
             "        return id;",
             "    };",
-            "};",
-            "$p.$accu = _accumlator();"
+            "}();"
         ];
 
         // Rule
