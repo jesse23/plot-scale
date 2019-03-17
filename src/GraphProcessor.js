@@ -6,6 +6,7 @@
 
 import * as _ from 'lodash';
 import * as Utils from './Utils';
+import * as FuncExecutor from './FuncExecutor';
 export class GraphProcessor {
     constructor() {
         let _ruleObjs = [];
@@ -25,11 +26,11 @@ export class GraphProcessor {
                         let objClause = ruleObj.src;
                         let value = _.get(obj, objClause.attr);
 
-                        if ( ruleObj.cond && !Utils.evalExpr( value, obj, g, ruleObj.cond ) ) {
+                        if ( ruleObj.cond && !FuncExecutor.evalExpr( value, obj, g, ruleObj.cond ) ) {
                             return true;
                         }
 
-                        _.set( obj, ruleObj.src.attr, Utils.evalExpr( value, obj, g, ruleObj.func ) );
+                        _.set( obj, ruleObj.src.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
                     }
                 } );
             } );

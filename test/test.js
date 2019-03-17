@@ -292,4 +292,49 @@ describe('Test as Example', function() {
 
         assert.deepEqual( App.run( source, rules ), target );
     });
+
+    it('Test: Custom function in mapping', function() {
+        // Function rule
+        let funcRules = [
+            "var _accumlator = function() {",
+            "    var id = 0;",
+            "    return function() {",
+            "        id++;",
+            "        return id;",
+            "    };",
+            "};",
+            "$p.$accu = _accumlator();"
+        ];
+
+        // Rule
+        let rules = [
+            "Object:Object",
+            "Object.name:Object.name",
+            "Object.id::$p.$accu()"
+        ];
+ 
+        // Source
+        let source = [ 
+            {
+                name: 'George Washington'
+            }, 
+            {
+                name: 'Donald Trump'
+            } 
+        ];
+
+        // Target
+        let target = [ 
+            {
+                name: 'George Washington',
+                id: 1
+            }, 
+            {
+                name: 'Donald Trump',
+                id: 2
+            } 
+        ];
+
+        assert.deepEqual( App.run( source, rules, funcRules ), target );
+    });
 });

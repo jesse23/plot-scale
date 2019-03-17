@@ -6,6 +6,7 @@
 
 import * as _ from 'lodash';
 import * as Utils from './Utils';
+import * as FuncExecutor from './FuncExecutor';
 
 export class AttrMapper {
     constructor() {
@@ -27,12 +28,12 @@ export class AttrMapper {
                         let obj = ruleObj.src ? tarObj._plot_source : tarObj;
                         let value = _.get(obj, objClause.attr);
 
-                        if ( ruleObj.cond && !Utils.evalExpr( value, obj, g, ruleObj.cond ) ) {
+                        if ( ruleObj.cond && !FuncExecutor.evalExpr( value, obj, g, ruleObj.cond ) ) {
                             return true;
                         }
 
                         if ( ruleObj.func ) {
-                            _.set( tarObj, ruleObj.tar.attr, Utils.evalExpr( value, obj, g, ruleObj.func ) );
+                            _.set( tarObj, ruleObj.tar.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
                         } else {
                             _.set( tarObj, ruleObj.tar.attr, value );
                         }

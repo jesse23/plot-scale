@@ -5,6 +5,7 @@
  */
 import * as _ from 'lodash';
 import * as Compiler from './Compiler.js';
+import * as FuncExecutor from './FuncExecutor';
 
 // Private variables
 // let _eventName = '_test';
@@ -28,7 +29,12 @@ import * as Compiler from './Compiler.js';
 // ----------------------------------------------------------------------
 // xfer version
 // ----------------------------------------------------------------------
-export let run = function ( sG, rules ) {
+export let run = function ( sG, rules, funcRules ) {
+
+    if ( funcRules ) {
+        FuncExecutor.evalDef( funcRules );
+    }
+
     return _.reduce( Compiler.compile( rules ), function( g, proc ) {
         return proc.exec(g);
     }, sG);
