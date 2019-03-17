@@ -12,3 +12,11 @@ export let isType = function( obj, typeName ) {
     }
     return obj._plot_type === typeName;
 };
+
+export let set = function( obj, path, value ) {
+    // Only support single path for now
+    _.set( obj, path, value );
+    if ( value && value._plot_type && !path.includes('.') ) {
+        _.set( value, '_plot_refby.' + path, obj );
+    }
+};

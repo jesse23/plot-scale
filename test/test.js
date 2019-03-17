@@ -218,7 +218,7 @@ describe('Test as Example', function() {
 
             "Part:View",
             "Part.name:View.source[0].displayValue:'N'.concat($value)",
-            "Part.coreRef:View.source:_.map($value, '_plot_target')",
+            "Part.coreRef:View.source:_.map($value, '_plot_refby._plot_source')",
             // TODO: Need to enhance later
             "Part.coreRef[0].width:View.width",
 
