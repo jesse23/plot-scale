@@ -3,7 +3,7 @@
  */
 
 // Module
-import * as App from '../src/App.js';
+import * as App from '../src/App';
 import * as assert from 'assert';
 
 // Suite
@@ -154,7 +154,7 @@ describe('Test as Example', function() {
         let rules = [
             // pre-processing
             ":Object._plot_type:$object.type",
-            ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })",
+            ":View.source:$p.queryGraph($graph, { 'id': $value }, 'Source' )",
 
             // Mapping
             "Part:View",
@@ -214,14 +214,14 @@ describe('Test as Example', function() {
         let rules = [
             // pre-processing
             ":Object._plot_type:$object.type",
-            ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })",
-            ":View.from:_.filter($graph, { '_plot_type': 'View', 'id': $value })",
+            ":View.source:$p.queryGraph( $graph, { 'id': $value }, 'Source' )",
+            ":View.from:$p.queryGraph( $graph, { 'id': $value }, 'View' )",
 
             "Part:View",
             "Part.name:View.source[0].displayValue:'N'.concat($value)",
             "Part.coreRef:View.source:_.map($value, '_plot_refby._plot_source')",
             // TODO: How to build the REF and REF array?
-            // Fow now all pre-processing is trying to construct an array but refby is still
+            // For now all pre-processing is trying to construct an array but refby is still
             // doing a direct ref
             "Part.coreRef[0].width:View.width",
             "Part.nextGen:View._plot_refby.from:_.get($value, '_plot_refby._plot_source')",

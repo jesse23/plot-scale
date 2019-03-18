@@ -5,7 +5,7 @@
  */
 
 import * as _ from 'lodash';
-import { Const } from './Const.js';
+import { Const } from './Const';
 
 export class JsonFormatter {
     constructor() {

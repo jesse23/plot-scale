@@ -7,7 +7,7 @@
 import * as _ from 'lodash';
 import * as Utils from './Utils';
 import * as FuncExecutor from './FuncExecutor';
-import { Const } from './Const.js';
+import { Const } from './Const';
 
 export class AttrMapper {
     constructor() {

@@ -3,7 +3,7 @@
  */
 
 // Module
-import * as App from '../src/App.js';
+import * as App from '../src/App';
 import * as assert from 'assert';
 
 // Suite

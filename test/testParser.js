@@ -3,7 +3,7 @@
  */
 
 // Module
-import * as Parser from '../src/Parser.js';
+import * as Parser from '../src/Parser';
 import * as assert from 'assert';
 
 // Suite

@@ -6,7 +6,7 @@
 
 import * as _ from 'lodash';
 import * as Utils from './Utils';
-import { Const } from './Const.js';
+import { Const } from './Const';
 
 export class NodeMapper {
     constructor() {

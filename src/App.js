@@ -4,9 +4,9 @@
  * Available under MIT License
  */
 import * as _ from 'lodash';
-import * as Compiler from './Compiler.js';
+import * as Compiler from './Compiler';
 import * as FuncExecutor from './FuncExecutor';
-import { Const } from './Const.js';
+import { Const } from './Const';
 
 // Private variables
 // let _eventName = '_test';
@@ -32,9 +32,7 @@ import { Const } from './Const.js';
 // ----------------------------------------------------------------------
 export let run = function ( sG, rules, funcRules ) {
 
-    if ( funcRules ) {
-        FuncExecutor.evalDef( funcRules );
-    }
+    FuncExecutor.evalDef( funcRules );
 
     // process input with _plot_type
     _.forEach( sG, function(obj){

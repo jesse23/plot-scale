@@ -5,11 +5,11 @@
  */
 
 import * as _ from 'lodash';
-import * as Parser from './Parser.js';
-import {NodeMapper} from './NodeMapper.js';
-import {AttrMapper} from './AttrMapper.js';
-import {JsonFormatter} from './JsonFormatter.js';
-import { GraphProcessor } from './GraphProcessor.js';
+import * as Parser from './Parser';
+import {NodeMapper} from './NodeMapper';
+import {AttrMapper} from './AttrMapper';
+import {JsonFormatter} from './JsonFormatter';
+import { GraphProcessor } from './GraphProcessor';
 
 export let compile = function( ruleClauses ) {
 

@@ -5,6 +5,7 @@
  */
 
 import * as _ from 'lodash';
+import * as FuncScope from './FuncScope';
 
 let _scope = {};
 
@@ -14,8 +15,11 @@ export let evalExpr = function( value, object, graph, expr ) {
 };
 
 export let evalDef = function( funcRules ) {
-    _scope = {};
+    _scope = _.clone(FuncScope);
 
-    let func = new Function( '$p', funcRules.join('') );
-    return func( _scope );
+    if ( funcRules && funcRules.length > 0 ) {
+        let func = new Function( '$p', funcRules.join('') );
+        func( _scope );
+    }
+    return _scope;
 };
