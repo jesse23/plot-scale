@@ -215,12 +215,14 @@ describe('Test as Example', function() {
             // pre-processing
             ":Object._plot_type:$object.type",
             ":View.source:_.filter($graph, { '_plot_type': 'Source', 'id': $value })",
+            ":View.from:_.filter($graph, { '_plot_type': 'View', 'id': $value })",
 
             "Part:View",
             "Part.name:View.source[0].displayValue:'N'.concat($value)",
             "Part.coreRef:View.source:_.map($value, '_plot_refby._plot_source')",
-            // TODO: Need to enhance later
+            // TODO: How to build the REF and REF array?
             "Part.coreRef[0].width:View.width",
+            "Part.nextGen:View._plot_refby.from:_.get($value, '_plot_refby._plot_source')",
 
             "Core:Source",
             "Core.length:Source.length:parseInt($value)",
@@ -230,6 +232,7 @@ describe('Test as Example', function() {
             // Post processing
             "Object.type::$object._plot_type",
             "Part.coreRef::_.map($value, 'uid')[0]",
+            "Part.nextGen::_.get($value, 'uid')"
         ];
  
         // Source
@@ -272,7 +275,7 @@ describe('Test as Example', function() {
             {
                 type: "Part",
                 name: "Nshape2",
-                // nextGen: "M01",
+                nextGen: "M01",
                 coreRef: "M04",
                 uid: "M02"
             },

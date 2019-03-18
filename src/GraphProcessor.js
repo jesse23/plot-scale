@@ -30,7 +30,9 @@ export class GraphProcessor {
                             return true;
                         }
 
-                        Utils.set( obj, ruleObj.src.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
+                        let res = FuncExecutor.evalExpr( value, obj, g, ruleObj.func );
+
+                        Utils.set( obj, ruleObj.src.attr, res );
                     }
                 } );
             } );

@@ -20,9 +20,9 @@ export class JsonFormatter {
         this.exec = function( g ) {
             // Clean up internal attribute
             _.forEach( g, function(tarObj) {
-                delete tarObj[Const.KEY_SOURCE];
                 delete tarObj[Const.KEY_TYPE];
                 delete tarObj[Const.KEY_REFBY];
+                delete tarObj[Const.KEY_SOURCE];
             } );
 
             return g;

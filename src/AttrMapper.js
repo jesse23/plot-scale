@@ -33,8 +33,15 @@ export class AttrMapper {
                             return true;
                         }
 
+                        if ( objClause.attr === '_plot_refby.from' ) {
+                            console.log( 'Jesse -> ' + objClause.attr + ':' + value );
+                        }
+
                         if ( ruleObj.func ) {
-                            Utils.set( tarObj, ruleObj.tar.attr, FuncExecutor.evalExpr( value, obj, g, ruleObj.func ) );
+                            let res = FuncExecutor.evalExpr( value, obj, g, ruleObj.func );
+                            if ( res ) {
+                                Utils.set( tarObj, ruleObj.tar.attr, res );
+                            }
                         } else {
                             Utils.set( tarObj, ruleObj.tar.attr, value );
                         }
