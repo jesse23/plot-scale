@@ -7,6 +7,7 @@
 import * as _ from 'lodash';
 import * as Utils from './Utils';
 import * as FuncExecutor from './FuncExecutor';
+import * as $p from './FuncScope';
 import { Const } from './Const';
 
 export class AttrMapper {
@@ -35,10 +36,11 @@ export class AttrMapper {
 
                         if ( ruleObj.func ) {
                             let res = FuncExecutor.evalExpr( value, obj, g, ruleObj.func );
-                            if ( res ) {
-                                Utils.set( tarObj, ruleObj.tar.attr, res );
-                            }
+                            Utils.set( tarObj, ruleObj.tar.attr, res );
                         } else {
+                            if ( value && value[0] && value[0][Const.KEY_TYPE] ) {
+                                value = $p.getMappedObject(value);
+                            }
                             Utils.set( tarObj, ruleObj.tar.attr, value );
                         }
                     }

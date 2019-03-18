@@ -14,20 +14,28 @@ export let isType = function( obj, typeName ) {
     return obj[Const.KEY_TYPE] === typeName;
 };
 
+let setRefby = function( obj, path, value ) {
+    if ( value && value[Const.KEY_TYPE] ) {
+        _.set( value, Const.KEY_REFBY + '.' + path, [ obj ] );
+    }
+};
+
 export let set = function( obj, path, value ) {
-
-
     // Only support single path for now
     if ( !path.includes('.') ) {
         if ( _.isArray(value) ) {
             _.forEach( value, function(v) {
-                if ( v && v[Const.KEY_TYPE] ) {
-                    _.set( v, Const.KEY_REFBY + '.' + path, obj );
-
-                }
+                setRefby( obj, path, v );
             } );
-        } else if ( value && value[Const.KEY_TYPE] ) {
-            _.set( value, Const.KEY_REFBY + '.' + path, obj );
+        } else {
+            setRefby( obj, path, value );
+        }
+
+        if ( !value ) {
+            delete obj[path];
+            return obj;
+        } else {
+            return _.set( obj, path, value );
         }
     }
     return _.set( obj, path, value );

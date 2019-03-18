@@ -219,12 +219,13 @@ describe('Test as Example', function() {
 
             "Part:View",
             "Part.name:View.source[0].displayValue:'N'.concat($value)",
-            "Part.coreRef:View.source:_.map($value, '_plot_refby._plot_source')",
+            "Part.coreRef:View.source",
+
             // TODO: How to build the REF and REF array?
-            // For now all pre-processing is trying to construct an array but refby is still
-            // doing a direct ref
+            // For now all ref are presented as array
             "Part.coreRef[0].width:View.width",
-            "Part.nextGen:View._plot_refby.from:_.get($value, '_plot_refby._plot_source')",
+            // "Part.nextGen:View._plot_refby.from:$p.getMappedObject($value)",
+            "Part.nextGen:View._plot_refby.from",
 
             "Core:Source",
             "Core.length:Source.length:parseInt($value)",
@@ -233,8 +234,8 @@ describe('Test as Example', function() {
 
             // Post processing
             "Object.type::$object._plot_type",
-            "Part.coreRef::_.map($value, 'uid')[0]",
-            "Part.nextGen::_.get($value, 'uid')"
+            "Part.coreRef::$p.mapId($value, 'uid')",
+            "Part.nextGen::$p.mapId($value, 'uid')"
         ];
  
         // Source
