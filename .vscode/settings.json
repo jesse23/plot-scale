@@ -1,0 +1,13 @@
+{
+    "files.exclude": {
+        ".git": true
+    },
+    "search.exclude": {
+        ".vscode": true,
+        "node_modules": true,
+        "out": true
+    },
+    "css.validate": true,
+    "scss.validate": true,
+    "eslint.enable": true
+}

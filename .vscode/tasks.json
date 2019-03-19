@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [ {
+            "label": "audit",
+            "type": "shell",
+            "command": "npm run build audit",
+            "problemMatcher": []
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "npm run build test",
+            "problemMatcher": []
+        }
+    ]
+}
