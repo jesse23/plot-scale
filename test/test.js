@@ -149,6 +149,40 @@ describe('Test as Example', function() {
         assert.deepEqual( App.run( source, rules ), target );
     });
 
+    it( 'Test: Merge array', function() {
+        // Rule
+        let rules = [
+
+            // Mapping
+            "Object:Object",
+            "Object.new_attr:Object.ref1.attr:_.map($value, function(v){v.concat('_n')}).join(', ')"
+        ];
+
+        // Source
+        let source = [
+            {
+                ref1: [
+                    {
+                        attr: 'a',
+                    },
+                    {
+                        attr: 'b'
+                    }
+                ],
+            }
+        ];
+
+        // Target
+        let target = [
+            {
+                new_attr: "a_n, b_n"     
+            }
+        ];
+
+        assert.deepEqual( App.run( source, rules ), target );
+    } );
+
+
     it( 'Test: Merge objects', function() {
         // Rule
         let rules = [

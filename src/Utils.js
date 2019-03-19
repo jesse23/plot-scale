@@ -40,3 +40,7 @@ export let set = function( obj, path, value ) {
     }
     return _.set( obj, path, value );
 };
+
+export let get = function( obj, path ) {
+    return _.get(obj, path);
+};

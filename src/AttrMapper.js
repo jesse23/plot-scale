@@ -28,7 +28,7 @@ export class AttrMapper {
                     if( Utils.isType( tarObj, ruleObj.tar.type ) ) {
                         let objClause = ruleObj.src ? ruleObj.src : ruleObj.tar;
                         let obj = ruleObj.src ? tarObj[Const.KEY_SOURCE] : tarObj;
-                        let value = _.get(obj, objClause.attr);
+                        let value = Utils.get(obj, objClause.attr);
 
                         if ( ruleObj.cond && !FuncExecutor.evalExpr( value, obj, g, ruleObj.cond ) ) {
                             return true;
