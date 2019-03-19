@@ -155,7 +155,7 @@ describe('Test as Example', function() {
 
             // Mapping
             "Object:Object",
-            "Object.new_attr:Object.ref1.attr:_.map($value, function(v){v.concat('_n')}).join(', ')"
+            "Object.new_attr:Object.ref1.attr:_.map($value, function(v){return v.concat('_n')}).join(', ')"
         ];
 
         // Source
@@ -252,12 +252,10 @@ describe('Test as Example', function() {
             ":View.from:$p.queryGraph( $graph, { 'id': $value }, 'View' )",
 
             "Part:View",
-            "Part.name:View.source[0].displayValue:'N'.concat($value)",
+            "Part.name:View.source.displayValue:'N'.concat($value)",
             "Part.coreRef:View.source",
 
-            // TODO: How to build the REF and REF array?
-            // For now all ref are presented as array
-            "Part.coreRef[0].width:View.width",
+            "Part.coreRef.width:View.width",
             // "Part.nextGen:View._plot_refby.from:$p.getMappedObject($value)",
             "Part.nextGen:View._plot_refby.from",
 
