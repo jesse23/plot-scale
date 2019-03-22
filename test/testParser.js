@@ -223,4 +223,43 @@ describe('Test Parser', function() {
         assert.deepEqual( Parser.parse( clause ), ruleObj );
     });
 
+    it('Parse rule with type identifier', function(){
+        // Clause
+        let clause = "  B.b/C.e/F  :  A.a/D  :  :  { $value > 0 ? 'yes' : 'no' }  ";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: 'b/C.e/F'
+            },
+            src: {
+                type: 'A',
+                attr: 'a/D'
+            },
+            cond: "$value > 0 ? 'yes' : 'no'"
+        };
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });
+
+    it('Parse rule with filter in attribute', function(){
+        // Clause
+        let clause = "  B.b/ {$value.type === 'C'} .e  :  A.a/{ $value.type === 'D'}.f/{$value.name !== 'test'}  :  :  { $value > 0 ? 'yes' : 'no' }  ";
+
+        // Result
+        let ruleObj = {
+            tar: {
+                type: 'B',
+                attr: "b/ {$value.type === 'C'} .e"
+            },
+            src: {
+                type: 'A',
+                attr: "a/{ $value.type === 'D'}.f/{$value.name !== 'test'}"
+            },
+            cond: "$value > 0 ? 'yes' : 'no'"
+        };
+        assert.deepEqual( Parser.parse( clause ), ruleObj );
+    });
+
+
 });

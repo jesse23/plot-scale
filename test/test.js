@@ -256,7 +256,6 @@ describe('Test as Example', function() {
             "Part.coreRef:View.source",
 
             "Part.coreRef.width:View.width",
-            // "Part.nextGen:View._plot_refby.from:$p.getMappedObject($value)",
             "Part.nextGen:View._plot_refby.from",
 
             "Core:Source",
