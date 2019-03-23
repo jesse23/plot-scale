@@ -69,19 +69,34 @@ export let query = function( objArr, key ) {
     return trv( objArr, _.toPath(key) );
 };
 
-let trv = function( objArr, path, startIndex, endIndex ) {
+let getValue = function( obj, key ){
+    let [ attr, filterKey ] = key.split('/');
+    if ( filterKey ) {
+        return _.filter(_.flatten([obj[attr]]),function(v){
+            return filterKey ? v._plot_type === filterKey : true;
+        });
+    } else {
+        let value = obj[attr];
+        return value ? [value] : [];
+    }
+};
+
+let trv = function( objArr, paths, startIndex, endIndex ) {
     let hasFlattened = false;
     let index = ( startIndex === undefined ) ? 0 : startIndex;
-    const length = ( endIndex === undefined ) ? path.length : endIndex;
+    const length = ( endIndex === undefined ) ? paths.length : endIndex;
 
     while ( objArr.length > 0 && index < length ) {
+        // path process logic
+        let path = paths[index];
+
         // support string template later
         let res = [];
         let isAllArray = true;
         objArr.forEach( function(o){
-            let v = o[path[index]];
+            let v = getValue( o, path );
             if ( v ) {
-                res.push(v);
+                res = res.concat(v);
             }
             if( isAllArray && !_.isArray(o) ) {
                 isAllArray = false;

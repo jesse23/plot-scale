@@ -93,23 +93,96 @@ describe('Test Query', function() {
 
     it('Verify query returns values as flat array for multiple traverse with multi-value', function() {
         // rule
-        let clause = 'name.first';
+        let clause = 'name.last';
 
         // input
         let input = [
             {
                 name: {
-                    first: "Peters"
+                    last: "Peters"
+                }
+            },
+            {
+                name: {
+                    last: "Ray"
                 }
             }
         ];
 
         // output
         let output = [
-            "Peters"
+            "Peters",
+            "Ray"
         ];
 
         assert.deepEqual( Utils.query( input, clause ), output );
     });
 
+
+    // TODO: Not sure for ths case...will consider it later
+    xit('Verify query returns values as flat array for multiple traverse with multi-value and last traverse gets array', function() {
+        // rule
+        let clause = 'name.alias';
+
+        // input
+        let input = [
+            {
+                name: {
+                    alias: [ 
+                        "Peters",
+                        "Ghost"
+                    ]
+                }
+            },
+            {
+                name: {
+                    alias: [
+                        "Ray",
+                        "Phantom"
+                    ]
+                }
+            }
+        ];
+
+        // output
+        let output = [
+            "Peters",
+            "Ghost",
+            "Ray",
+            "Phantom"
+        ];
+
+        assert.deepEqual( Utils.query( input, clause ), output );
+    });
+
+
+    it('Verify query returns correct value for the case with type identifier', function() {
+        // rule
+        let clause = 'children/Boy.name';
+
+        // input
+        let input = [
+            {
+                name: "Tom",
+                children: {
+                    _plot_type: "Boy",
+                    name: "Mike"
+                }
+            },
+            {
+                name: "Lee",
+                children: {
+                    _plot_type: "Girl",
+                    name: "Mia"
+                }
+            }
+        ];
+
+        // output
+        let output = [
+            "Mike"
+        ];
+
+        assert.deepEqual( Utils.query( input, clause ), output );
+    });
 });
