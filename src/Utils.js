@@ -53,8 +53,8 @@ export let set = function( obj, key, value ) {
     }
 };
 
-export let get = function( obj, value ) {
-    let res = trv( [obj], _.toPath(value) );
+export let get = function( obj, key ) {
+    let res = query( [obj], key );
     // For not breaking logic, now we have if else below
     if ( res.length === 0 ) {
         return undefined;
@@ -65,7 +65,11 @@ export let get = function( obj, value ) {
     }
 };
 
-export let trv = function( objArr, path, startIndex, endIndex ) {
+export let query = function( objArr, key ) {
+    return trv( objArr, _.toPath(key) );
+};
+
+let trv = function( objArr, path, startIndex, endIndex ) {
     let hasFlattened = false;
     let index = ( startIndex === undefined ) ? 0 : startIndex;
     const length = ( endIndex === undefined ) ? path.length : endIndex;
@@ -74,7 +78,7 @@ export let trv = function( objArr, path, startIndex, endIndex ) {
         // support string template later
         let res = [];
         let isAllArray = true;
-        _.forEach( objArr, function(o){
+        objArr.forEach( function(o){
             let v = o[path[index]];
             if ( v ) {
                 res.push(v);
