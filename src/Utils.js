@@ -71,12 +71,13 @@ export let query = function( objArr, key ) {
 
 let getValue = function( obj, key ){
     let [ attr, filterKey ] = key.split('/');
+    let value = obj[attr];
+    let value1 = value ? ( _.isArray(value) ? value : [ value ] ) : [];
     if ( filterKey ) {
-        return _.filter(_.flatten([obj[attr]]),function(v){
+        return _.filter(value1,function(v){
             return filterKey ? v._plot_type === filterKey : true;
         });
     } else {
-        let value = obj[attr];
         return value ? [value] : [];
     }
 };
@@ -95,9 +96,7 @@ let trv = function( objArr, paths, startIndex, endIndex ) {
         let isAllArray = true;
         objArr.forEach( function(o){
             let v = getValue( o, path );
-            if ( v ) {
-                res = res.concat(v);
-            }
+            res = res.concat(v);
             if( isAllArray && !_.isArray(o) ) {
                 isAllArray = false;
             }
