@@ -65,7 +65,7 @@ export let get = function( obj, value ) {
     }
 };
 
-let trv = function( objArr, path, startIndex, endIndex ) {
+export let trv = function( objArr, path, startIndex, endIndex ) {
     let hasFlattened = false;
     let index = ( startIndex === undefined ) ? 0 : startIndex;
     const length = ( endIndex === undefined ) ? path.length : endIndex;
