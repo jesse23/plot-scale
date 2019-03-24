@@ -28,7 +28,12 @@ export class AttrMapper {
                     if( Utils.isType( tarObj, ruleObj.tar.type ) ) {
                         let objClause = ruleObj.src ? ruleObj.src : ruleObj.tar;
                         let obj = ruleObj.src ? tarObj[Const.KEY_SOURCE] : tarObj;
+
+                        // TODO: This is the key place to change the logic to array base
+                        // let values = Utils.query(obj, objClause.attr);
+                        //  let value = Utils.getPolyFill(values);
                         let value = Utils.get(obj, objClause.attr);
+
 
                         if ( ruleObj.cond && !FuncExecutor.evalExpr( value, obj, g, ruleObj.cond ) ) {
                             return true;
@@ -38,7 +43,9 @@ export class AttrMapper {
                             let res = FuncExecutor.evalExpr( value, obj, g, ruleObj.func );
                             Utils.set( tarObj, ruleObj.tar.attr, res );
                         } else {
-                            if ( value && value[0] && value[0][Const.KEY_TYPE] ) {
+                            if  ( value && value[Const.KEY_TYPE] ) {
+                                value = $p.getMappedObject([value]);
+                            } else if ( value && value[0] && value[0][Const.KEY_TYPE] ) {
                                 value = $p.getMappedObject(value);
                             }
                             Utils.set( tarObj, ruleObj.tar.attr, value );

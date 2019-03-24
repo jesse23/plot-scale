@@ -24,6 +24,8 @@ export class GraphProcessor {
                 _.forEach( g, function(obj) {
                     if( Utils.isType( obj, ruleObj.src.type ) ) {
                         let objClause = ruleObj.src;
+                        //let values = Utils.query(obj, objClause.attr);
+                        //let value = Utils.getPolyFill(values);
                         let value = Utils.get(obj, objClause.attr);
 
                         if ( ruleObj.cond && !FuncExecutor.evalExpr( value, obj, g, ruleObj.cond ) ) {

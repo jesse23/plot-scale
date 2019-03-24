@@ -54,7 +54,10 @@ export let set = function( obj, key, value ) {
 };
 
 export let get = function( obj, key ) {
-    let res = query( [obj], key );
+    return getPolyfill(query( [obj], key ));
+};
+
+export let getPolyfill = function( res ) {
     // For not breaking logic, now we have if else below
     if ( res.length === 0 ) {
         return undefined;
@@ -78,12 +81,13 @@ let getValue = function( obj, key ){
             return filterKey ? v._plot_type === filterKey : true;
         });
     } else {
-        return value ? [value] : [];
+        // TODO: Jesse, change this to value1
+        // return value ? [value] : [];
+        return value1;
     }
 };
 
 let trv = function( objArr, paths, startIndex, endIndex ) {
-    let hasFlattened = false;
     let index = ( startIndex === undefined ) ? 0 : startIndex;
     const length = ( endIndex === undefined ) ? paths.length : endIndex;
 
@@ -102,15 +106,35 @@ let trv = function( objArr, paths, startIndex, endIndex ) {
             }
         });
 
-        if ( res.length === 0 && isAllArray && !hasFlattened ) {
-            objArr = _.flatten( objArr );
-            hasFlattened = true;
-        } else {
-            index++;
-            objArr = res;
-            hasFlattened = false;
-        }
+        index++;
+        objArr = res;
     }
 
     return objArr;
 }; 
+
+// https://stackoverflow.com/questions/11616630/json-stringify-avoid-typeerror-converting-circular-structure-to-json
+export let toString = function(value){
+    if( _.isFunction(value) ) {
+        return '<#function#' + value.name + '>';
+    } else {
+        let cache = [];
+        return JSON.stringify(value, function(key, value) {
+            if (typeof value === 'object' && value !== null) {
+                if (cache.indexOf(value) !== -1) {
+                    // Duplicate reference found
+                    try {
+                        // If this value does not reference a parent it can be deduped
+                        return JSON.parse(JSON.stringify(value));
+                    } catch (error) {
+                        // discard key if value cannot be deduped
+                        return '<#ref>';
+                    }
+                }
+                // Store value in our collection
+                cache.push(value);
+            }
+            return value;
+        });
+    }
+};

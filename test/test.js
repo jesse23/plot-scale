@@ -194,7 +194,7 @@ describe('Test as Example', function() {
             "Part:View",
             "Object.type::$object._plot_type",
             "Part.width:View.width",
-            "Part.length:View.source[0].length",
+            "Part.length:View.source.length",
         ];
 
         // Source
@@ -259,7 +259,8 @@ describe('Test as Example', function() {
             "Part.nextGen:View._plot_refby.from",
 
             "Core:Source",
-            "Core.length:Source.length:parseInt($value)",
+            // "Core.length:Source.length:parseInt($value)",
+            "Core.length:Source.length:",
 
             "Object.uid:Object.id:$value.replace(/^00/,'M')",
 

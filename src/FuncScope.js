@@ -5,6 +5,7 @@
  */
 
 import * as _ from 'lodash';
+import * as Utils from './Utils';
 import { Const } from './Const';
 
 export let queryGraph = function( g, cond, type ) {
