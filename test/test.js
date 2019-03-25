@@ -182,6 +182,29 @@ describe('Test as Example', function() {
         assert.deepEqual( App.run( source, rules ), target );
     } );
 
+    xit( 'Test: Map array', function(){
+        // Rule
+        let rules = [
+            "Object:Object",
+            "Object.value:Object.value"
+        ];
+
+        // Source
+        let source = [
+            {
+                value: [
+                    1
+                ]
+            },
+            {
+                value: [
+                    3
+                ]
+            }
+        ];
+        assert.deepEqual( App.run( source, rules ), source );
+    } );
+
 
     it( 'Test: Merge objects', function() {
         // Rule

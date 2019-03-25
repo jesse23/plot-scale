@@ -30,7 +30,7 @@ export class AttrMapper {
                         let obj = ruleObj.src ? tarObj[Const.KEY_SOURCE] : tarObj;
 
                         // TODO: This is the key place to change the logic to array base
-                        // let values = Utils.query(obj, objClause.attr);
+                        // let values = Utils.query([obj], objClause.attr);
                         //  let value = Utils.getPolyFill(values);
                         let value = Utils.get(obj, objClause.attr);
 

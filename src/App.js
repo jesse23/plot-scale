@@ -32,6 +32,8 @@ import { Const } from './Const';
 // ----------------------------------------------------------------------
 export let run = function ( sG, rules, funcRules ) {
 
+    sG = _.cloneDeep( sG );
+
     FuncExecutor.evalDef( funcRules );
 
     // process input with _plot_type

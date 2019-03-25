@@ -119,8 +119,7 @@ describe('Test Query', function() {
     });
 
 
-    // TODO: Not sure for ths case...will consider it later
-    xit('Verify query returns values as flat array for multiple traverse with multi-value and last traverse gets array', function() {
+    it('Verify query returns values as flat array for multiple traverse with multi-value and last traverse gets array', function() {
         // rule
         let clause = 'name.alias';
 
