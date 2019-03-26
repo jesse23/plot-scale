@@ -41,7 +41,7 @@ export let set = function( obj, key, value ) {
         }
     }
 
-    var trvRes = trv([obj], path, 0, path.length - 1 );
+    var trvRes = trv([obj], path, 0, path.length - 1 ).result;
 
     if ( trvRes.length > 0 ) {
         // One flattern for a.b[0].c case
@@ -54,7 +54,7 @@ export let set = function( obj, key, value ) {
 };
 
 export let get = function( obj, key ) {
-    return getPolyfill(query( [obj], key ));
+    return getPolyfill(query( [obj], key ).result);
 };
 
 export let getPolyfill = function( res ) {
@@ -110,7 +110,10 @@ let trv = function( objArr, paths, startIndex, endIndex ) {
         objArr = res;
     }
 
-    return objArr;
+    return {
+        result: objArr,
+        isArray: true
+    };
 }; 
 
 // https://stackoverflow.com/questions/11616630/json-stringify-avoid-typeerror-converting-circular-structure-to-json

@@ -26,7 +26,7 @@ describe('Test Query', function() {
             "Lucy"
         ];
 
-        assert.deepEqual( Utils.query( input, clause ), output );
+        assert.deepEqual( Utils.query( input, clause ).result, output );
     });
 
     it('Verify query returns [] when result is not found', function() {
@@ -44,7 +44,7 @@ describe('Test Query', function() {
         let output = [
         ];
 
-        assert.deepEqual( Utils.query( input, clause ), output );
+        assert.deepEqual( Utils.query( input, clause ).result, output );
     });
 
     it('Verify query returns correct value for multiple traverse', function() {
@@ -65,7 +65,7 @@ describe('Test Query', function() {
             "Peters"
         ];
 
-        assert.deepEqual( Utils.query( input, clause ), output );
+        assert.deepEqual( Utils.query( input, clause ).result, output );
     });
 
     it('Verify query returns values as array for multiple results', function() {
@@ -88,7 +88,7 @@ describe('Test Query', function() {
             "Jim"
         ];
 
-        assert.deepEqual( Utils.query( input, clause ), output );
+        assert.deepEqual( Utils.query( input, clause ).result, output );
     });
 
     it('Verify query returns values as flat array for multiple traverse with multi-value', function() {
@@ -115,7 +115,7 @@ describe('Test Query', function() {
             "Ray"
         ];
 
-        assert.deepEqual( Utils.query( input, clause ), output );
+        assert.deepEqual( Utils.query( input, clause ).result, output );
     });
 
 
@@ -151,7 +151,7 @@ describe('Test Query', function() {
             "Phantom"
         ];
 
-        assert.deepEqual( Utils.query( input, clause ), output );
+        assert.deepEqual( Utils.query( input, clause ).result, output );
     });
 
 
@@ -182,6 +182,6 @@ describe('Test Query', function() {
             "Mike"
         ];
 
-        assert.deepEqual( Utils.query( input, clause ), output );
+        assert.deepEqual( Utils.query( input, clause ).result, output );
     });
 });
