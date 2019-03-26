@@ -75,35 +75,33 @@ export let query = function( objArr, key ) {
 let getValue = function( obj, key ){
     let [ attr, filterKey ] = key.split('/');
     let value = obj[attr];
-    let value1 = value ? ( _.isArray(value) ? value : [ value ] ) : [];
-    if ( filterKey ) {
-        return _.filter(value1,function(v){
+    let isSingle = !_.isArray(value);
+    let value1 = value ? ( isSingle ? [ value ] : value ) : [];
+    return {
+        result: _.filter(value1,function(v){
             return filterKey ? v._plot_type === filterKey : true;
-        });
-    } else {
-        // TODO: Jesse, change this to value1
-        // return value ? [value] : [];
-        return value1;
-    }
+        }),
+        isSingle: isSingle
+    };
 };
 
 let trv = function( objArr, paths, startIndex, endIndex ) {
     let index = ( startIndex === undefined ) ? 0 : startIndex;
     const length = ( endIndex === undefined ) ? paths.length : endIndex;
 
+    let isSingle = true;
     while ( objArr.length > 0 && index < length ) {
         // path process logic
         let path = paths[index];
 
         // support string template later
         let res = [];
-        let isAllArray = true;
+        isSingle = true;
         objArr.forEach( function(o){
+            isSingle = objArr.length === 1;
             let v = getValue( o, path );
-            res = res.concat(v);
-            if( isAllArray && !_.isArray(o) ) {
-                isAllArray = false;
-            }
+            isSingle = isSingle && v.isSingle;
+            res = res.concat(v.result);
         });
 
         index++;
@@ -112,7 +110,7 @@ let trv = function( objArr, paths, startIndex, endIndex ) {
 
     return {
         result: objArr,
-        isArray: true
+        isSingle: isSingle
     };
 }; 
 

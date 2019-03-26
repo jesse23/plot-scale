@@ -110,12 +110,15 @@ describe('Test Query', function() {
         ];
 
         // output
-        let output = [
-            "Peters",
-            "Ray"
-        ];
+        let output = {
+            result: [
+                "Peters",
+                "Ray"
+            ],
+            isSingle: false
+        };
 
-        assert.deepEqual( Utils.query( input, clause ).result, output );
+        assert.deepEqual( Utils.query( input, clause ), output );
     });
 
 
@@ -178,10 +181,13 @@ describe('Test Query', function() {
         ];
 
         // output
-        let output = [
-            "Mike"
-        ];
+        let output = {
+            result: [
+                "Mike"
+            ],
+            isSingle: true
+        };
 
-        assert.deepEqual( Utils.query( input, clause ).result, output );
+        assert.deepEqual( Utils.query( input, clause ), output );
     });
 });
