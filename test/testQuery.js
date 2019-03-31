@@ -61,12 +61,40 @@ describe('Test Query', function() {
         ];
 
         // output
-        let output = [
-            "Peters"
+        let output = {
+            result: [
+                "Peters"
+            ],
+            isSingle: true 
+        };
+
+        assert.deepEqual( Utils.query( input, clause ), output );
+    });
+
+    it('Verify query returns isSingle as false when returns an array', function() {
+        // rule
+        let clause = 'name.first';
+
+        // input
+        let input = [
+            {
+                name: {
+                    first: [ "Peters" ]
+                }
+            }
         ];
 
-        assert.deepEqual( Utils.query( input, clause ).result, output );
+        // output
+        let output = {
+            result: [
+                "Peters"
+            ],
+            isSingle:  false
+        };
+
+        assert.deepEqual( Utils.query( input, clause ), output );
     });
+
 
     it('Verify query returns values as array for multiple results', function() {
         // rule
