@@ -15,7 +15,7 @@ export class AttrMapper {
         let _ruleObjs = [];
 
         this.when = function( ruleObj ) {
-            return ruleObj.tar && ruleObj.tar.attr; 
+            return ruleObj.tar; 
         };
 
         this.add = function( ruleObj ) {
@@ -40,16 +40,15 @@ export class AttrMapper {
                         }
 
                         if ( ruleObj.func ) {
-                            let res = FuncExecutor.evalExpr( value, obj, g, ruleObj.func );
-                            Utils.set( tarObj, ruleObj.tar.attr, res );
+                            value = FuncExecutor.evalExpr( value, obj, g, ruleObj.func );
                         } else {
                             if  ( value && value[Const.KEY_TYPE] ) {
                                 value = $p.getMappedObject([value]);
                             } else if ( value && value[0] && value[0][Const.KEY_TYPE] ) {
                                 value = $p.getMappedObject(value);
                             }
-                            Utils.set( tarObj, ruleObj.tar.attr, value );
                         }
+                        Utils.set( tarObj, ruleObj.tar.attr, value );
                     }
                 } );
             } );

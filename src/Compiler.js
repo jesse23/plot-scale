@@ -28,6 +28,7 @@ export let compile = function( ruleClauses ) {
         _.forEach( procs, function( proc ) {
             if ( proc.when( ruleObj ) ) {
                 proc.add( ruleObj );
+                return false;
             }
         });
     } );

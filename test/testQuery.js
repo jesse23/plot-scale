@@ -218,4 +218,37 @@ describe('Test Query', function() {
 
         assert.deepEqual( Utils.query( input, clause ), output );
     });
+
+    xit('Verify query returns correct value for the case with attribute filter', function() {
+        // rule
+        let clause = "children/{ $value.name === 'Mike'}.name";
+
+        // input
+        let input = [
+            {
+                name: "Tom",
+                children: {
+                    _plot_type: "Boy",
+                    name: "Mike"
+                }
+            },
+            {
+                name: "Lee",
+                children: {
+                    _plot_type: "Girl",
+                    name: "Mia"
+                }
+            }
+        ];
+
+        // output
+        let output = {
+            result: [
+                "Mike"
+            ],
+            isSingle: true
+        };
+
+        assert.deepEqual( Utils.query( input, clause ), output );
+    });
 });

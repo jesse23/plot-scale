@@ -46,10 +46,18 @@ export let set = function( obj, key, value ) {
     if ( trvRes.length > 0 ) {
         // One flattern for a.b[0].c case
         return _.forEach(_.flatten(trvRes), function(o){
-            _.set( o, path[path.length - 1], value );
+            if ( path.length > 0 ) {
+                _.set( o, path[path.length - 1], value );
+            } else {
+                _.assign( o, value );
+            }
         });
     } else {
-        _.set( obj, key, value );
+        if (key) {
+            _.set( obj, key, value );
+        } /*else {
+            _.assign( obj, value );
+        }*/
     }
 };
 

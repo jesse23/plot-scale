@@ -397,4 +397,57 @@ describe('Test as Example', function() {
 
         assert.deepEqual( App.run( source, rules, funcRules ), target );
     });
+
+    it('Test: Merge object when no attr on target object', function(){
+        // Rule
+        let rules = [
+            'tar:Object',
+            'tar:Object.props:_.set( {}, $object.uid, _.join( [$value.name.value, $value.desc.value]) ) '
+        ];
+ 
+        // Source
+        let source = [ 
+            {
+                type: "Element",
+                uid: "00001",
+                props: {
+                    name: {
+                        value: 'elem1',
+                        isEditable: false 
+                    },
+                    desc: {
+                        value: 'First Element',
+                        isEditable: true
+                    }
+                }
+
+            },
+            {
+                type: "Element",
+                uid: "00002",
+                props: {
+                    name: {
+                        value: 'elem2',
+                        isEditable: false 
+                    },
+                    desc: {
+                        value: 'Second Element',
+                        isEditable: true
+                    }
+                }
+            }
+        ];
+
+        // Target
+        let target = [
+            {
+                "00001": "elem1,First Element"
+            },
+            {
+                "00002": "elem2,Second Element"
+            }
+        ];
+
+        assert.deepEqual( App.run( source, rules ), target );
+    });
 });
